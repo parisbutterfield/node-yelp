@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/parisbutterfield/node-yelp.svg?branch=master)](https://travis-ci.org/parisbutterfield/node-yelp) [![NPM version](https://badge.fury.io/js/yelp.png)](http://badge.fury.io/js/yelp)
+[![Build Status](https://travis-ci.org/parisbutterfield/node-yelp.svg?branch=master)](https://travis-ci.org/parisbutterfield/node-yelp) [![NPM version](https://badge.fury.io/js/yelp-v3.png)](http://badge.fury.io/js/yelp-v3)
 
 
 This project uses v3 of the API which is currently in developer preview.

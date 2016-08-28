@@ -30,18 +30,35 @@ class Yelp {
     return promise;
   }
 
+
+  /**
+   * https://github.com/Yelp/yelp-api-v3/blob/master/docs/api-references/businesses-search.md
+   * Example:
+   * yelp.search({term: 'food', location: 'Montreal', function(error, data) {});
+   */
   search(params, callback) {
     return this.get('businesses/search', params, callback);
   }
 
+
+  /**
+   * https://github.com/Yelp/yelp-api-v3/blob/master/docs/api-references/businesses-id.md
+   * Example:
+   * yelp.businesses('yelp-san-francisco', function(error, data) {});
+   */
   businesses(id, callback) {
     return this.get('businesses/' + id, undefined, callback);
   }
 
+
+  /**
+   * https://github.com/Yelp/yelp-api-v3/blob/master/docs/api-references/businesses-id-reviews.md
+   * Example:
+   * yelp.businessesReviews('yelp-san-francisco', function(error, data) {});
+   */
   businessesReviews(id, callback) {
     return this.get('businesses/' + id + '/reviews', undefined, callback);
   }
-
 
   /**
    * https://github.com/Yelp/yelp-api-v3/blob/master/docs/api-references/autocomplete.md
