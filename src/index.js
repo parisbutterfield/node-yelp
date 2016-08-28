@@ -1,41 +1,25 @@
 import querystring from 'querystring';
-import oauth from 'oauth';
+import requestify from 'requestify';
 
-const OAuth = oauth.OAuth;
-
-const baseUrl = 'http://api.yelp.com/v2/';
+const baseUrl = 'https://api.yelp.com/v3/';
 
 class Yelp {
   constructor(opts) {
-    this.oauthToken = opts.token;
-    this.oauthTokenSecret = opts.token_secret;
-    this.oauth = new OAuth(
-      null,
-      null,
-      opts.consumer_key,
-      opts.consumer_secret,
-      opts.version || '1.0',
-      null,
-      'HMAC-SHA1'
-    );
+    this.access_token = opts.access_token;
   }
 
   get(resource, params = {}, cb) {
     const promise = new Promise((resolve, reject) => {
-      const debug = params.debug;
-      delete params.debug;
-
-      this.oauth.get(
-        baseUrl + resource + '?' + querystring.stringify(params),
-        this.oauthToken,
-        this.oauthTokenSecret,
-        (err, _data, response) => {
-          if (err) return reject(err);
-          const data = JSON.parse(_data);
-          if (debug) return resolve([ data, response ]);
-          resolve(data);
-        }
-      );
+      requestify.get(baseUrl + resource + '?' + querystring.stringify(params), {
+        headers: {
+          'Authorization': 'Bearer ' + this.access_token,
+        },
+      }).then(function(response) {
+        resolve(JSON.parse(response.body));
+      })
+      .fail(function(response) {
+        reject(response);
+      });
     });
     if (typeof cb === 'function') {
       promise
@@ -47,19 +31,33 @@ class Yelp {
   }
 
   search(params, callback) {
-    return this.get('search', params, callback);
+    return this.get('businesses/search', params, callback);
   }
 
-  business(id, callback) {
-    return this.get('business/' + id, undefined, callback);
+  businesses(id, callback) {
+    return this.get('businesses/' + id, undefined, callback);
   }
+
+  businessesReviews(id, callback) {
+    return this.get('businesses/' + id + '/reviews', undefined, callback);
+  }
+
 
   /**
-   * Exampe:
-   * yelp.phone_search({phone: "+12223334444"}, function(error, data) {});
+   * https://github.com/Yelp/yelp-api-v3/blob/master/docs/api-references/autocomplete.md
+   * Example:
+   * yelp.autocomplete(text: 'Mc', latitude: 40.730610, longitude: -73.935242, }, function(error, data) {});
+   */
+  autocomplete(params, callback) {
+    return this.get('autocomplete', params, callback);
+  }
+  /**
+   *https://github.com/Yelp/yelp-api-v3/blob/master/docs/api-references/businesses-search-phone.md
+   * Example:
+   * yelp.phoneSearch({phone: "+12223334444"}, function(error, data) {});
    */
   phoneSearch(params, callback) {
-    return this.get('phone_search', params, callback);
+    return this.get('businesses/search/phone', params, callback);
   }
 }
 
