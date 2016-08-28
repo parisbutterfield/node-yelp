@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/parisbutterfield/node-yelp.svg?branch=master)](https://travis-ci.org/parisbutterfield/node-yelp) [![NPM version](https://badge.fury.io/js/yelp-v3.png)](http://badge.fury.io/js/yelp-v3)
+[![Build Status](https://travis-ci.org/parisbutterfield/node-yelp.svg)](https://travis-ci.org/parisbutterfield/node-yelp) [![NPM version](https://badge.fury.io/js/yelp-v3.png)](http://badge.fury.io/js/yelp-v3)
 
 
 This project uses v3 of the API which is currently in developer preview.
@@ -19,7 +19,7 @@ npm install --save yelp-v3
 
 ```javascript
 // Request API access: https://www.yelp.com/developers/v3/preview
-var Yelp = require('yelp');
+var Yelp = require('yelp-v3');
 
 var yelp = new Yelp({
   access_token: 'access_token',
