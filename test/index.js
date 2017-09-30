@@ -33,6 +33,17 @@ test('yelp businesses', (t) => {
   });
 });
 
+test('yelp businesses utf-8', (t) => {
+  return yelp.businesses('peña-pachamama-san-francisco-2').then((data) => {
+    t.equal(typeof data.rating, 'number');
+    t.equal(typeof data.url, 'string');
+    t.ok(Array.isArray(data.photos), 'photos is array');
+    t.ok(Array.isArray(data.hours), 'hours is array');
+  })
+  .catch((err) => {
+    t.error(err);
+  });
+});
 
 test('yelp autocomplete', (t) => {
   return yelp.autocomplete({

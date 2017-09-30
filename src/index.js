@@ -45,9 +45,10 @@ class Yelp {
    * https://github.com/Yelp/yelp-api-v3/blob/master/docs/api-references/businesses-id.md
    * Example:
    * yelp.businesses('yelp-san-francisco', function(error, data) {});
+   * businesses may contain utf-8 characters, such as an accented character. using querystring.escape on the businessid
    */
   businesses(id, callback) {
-    return this.get('businesses/' + id, undefined, callback);
+    return this.get('businesses/' + querystring.escape(id), undefined, callback);
   }
 
 
@@ -57,7 +58,7 @@ class Yelp {
    * yelp.businessesReviews('yelp-san-francisco', function(error, data) {});
    */
   businessesReviews(id, callback) {
-    return this.get('businesses/' + id + '/reviews', undefined, callback);
+    return this.get('businesses/' + querystring.escape(id) + '/reviews', undefined, callback);
   }
 
   /**
